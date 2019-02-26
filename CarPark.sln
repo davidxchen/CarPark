@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarPark.Client", "CarPark.Client\CarPark.Client.csproj", "{E6CEC1FF-F3F7-4385-BD31-6C13A9EB69B7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarPark.Client", "src\CarPark.Client\CarPark.Client.csproj", "{E6CEC1FF-F3F7-4385-BD31-6C13A9EB69B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarPark.Services", "CarPark.Services\CarPark.Services.csproj", "{C8B6D264-2767-44F3-BCF4-E8C1E3714A22}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarPark.Services", "src\CarPark.Services\CarPark.Services.csproj", "{C8B6D264-2767-44F3-BCF4-E8C1E3714A22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarPark.WebServer", "CarPark.WebServer\CarPark.WebServer.csproj", "{5D290B6F-E75A-48E3-A76D-BE3FC4A8A93B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarPark.WebServer", "src\CarPark.WebServer\CarPark.WebServer.csproj", "{5D290B6F-E75A-48E3-A76D-BE3FC4A8A93B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
