@@ -15,12 +15,16 @@ namespace CarPark.Services.Services
 
         public Task<bool> Enter(string carPlate)
         {
-            throw new NotImplementedException();
+            ThrowIfDispose();
+
+            return Task.FromResult(!string.IsNullOrEmpty(carPlate));
         }
 
         public Task<bool> Leave(string carPlate)
         {
-            throw new NotImplementedException();
+            ThrowIfDispose();
+
+            return Task.FromResult(!string.IsNullOrEmpty(carPlate));
         }
 
         #region IDisposable Support
@@ -55,6 +59,8 @@ namespace CarPark.Services.Services
             Dispose(true);
             // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
+
+            Console.WriteLine($"{this.GetType().Name} is disposed.");
         }
 
         private void ThrowIfDispose()

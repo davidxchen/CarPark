@@ -1,5 +1,6 @@
 ﻿using CarPark.Services.Interfaces;
 using CarPark.Services.Models;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Threading.Tasks;
 
@@ -7,31 +8,61 @@ namespace CarPark.Services.Services
 {
     public class CarParkService : ICarParkService
     {
-        public CarParkService()
-        {
+        private readonly IMemoryCache _cache;
 
+        public CarParkService(IMemoryCache cache)
+        {
+            _cache = cache;
         }
 
         public Task<int> GetCapacity(Guid carparkId)
         {
-            throw new NotImplementedException();
+            ThrowIfDispose();
+
+            var capacity = GetCarParkInformation(carparkId).Result.Capacity;
+
+            return Task.FromResult(capacity);
         }
 
-        public async Task<CarParkInformation> GetCarParkInformation(Guid carparkId)
+        public Task<Guid> BuildCarPark(int capacity)
         {
             ThrowIfDispose();
 
-            var parkInfo = new CarParkInformation()
+            CarParkInformation carPark = new CarParkInformation
             {
-
+                CarParkId = new Guid("487407A8-5C59-4E86-9D91-80CC65AAD5A4"),
+                Capacity = capacity,
+                CarParkName = "Easy Park"
             };
 
-            return parkInfo;
+            _cache.Set(carPark.CarParkId.ToString(), carPark);
+
+            return Task.FromResult(carPark.CarParkId);
+        }
+
+        public Task<CarParkInformation> GetCarParkInformation(Guid carparkId)
+        {
+            ThrowIfDispose();
+
+            CarParkInformation carPark;
+            if (!_cache.TryGetValue(carparkId.ToString(), out carPark))
+            {
+                BuildCarPark(200);
+
+                _cache.TryGetValue(carparkId.ToString(), out carPark);
+            }
+            
+            return Task.FromResult(carPark);
         }
 
         public Task<bool> HasAvailableLots(Guid carparkId)
         {
-            throw new NotImplementedException();
+            ThrowIfDispose();
+
+            var capacity = GetCarParkInformation(carparkId).Result.Capacity;
+            var occupiedLots = 0;
+
+            return Task.FromResult((capacity - occupiedLots) > 0);
         }
 
         #region IDisposable Support
@@ -66,6 +97,8 @@ namespace CarPark.Services.Services
             Dispose(true);
             // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
+
+            Console.WriteLine($"{this.GetType().Name} is disposed.");
         }
 
         private void ThrowIfDispose()
